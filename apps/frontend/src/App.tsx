@@ -11,6 +11,7 @@ import { SortSelect } from './components/SortSelect'
 import { CustomerSearchInput } from './components/CustomerSearchInput'
 import { Pagination } from './components/common/Pagination'
 import { CustomerDetailModal } from './components/CustomerDetailModal'
+import { SectionErrorBoundary } from './components/SectionErrorBoundary'
 import { DEFAULT_DATE_RANGE } from './constants'
 
 function App() {
@@ -40,45 +41,51 @@ function App() {
 
       <Main>
         <Section>
-          <SectionHeader>
-            <h2>가격대별 구매 빈도</h2>
-            <CSVDownloadButton dateRange={dateRange} />
-          </SectionHeader>
-          <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
+          <SectionErrorBoundary sectionName="가격대별 구매 빈도">
+            <SectionHeader>
+              <h2>가격대별 구매 빈도</h2>
+              <CSVDownloadButton dateRange={dateRange} />
+            </SectionHeader>
+            <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
+          </SectionErrorBoundary>
         </Section>
 
         <Section>
-          <SectionHeader>
-            <h2>고객 목록</h2>
-            <Controls>
-              <CustomerSearchInput value={customers.name} onChange={customers.setName} />
-              <SortSelect sortBy={customers.sortBy} onSort={customers.setSortBy} />
-            </Controls>
-          </SectionHeader>
-          <CustomerList
-            customers={customers.customers}
-            isLoading={customers.isLoading}
-            error={customers.error}
-            onCustomerClick={handleCustomerClick}
-          />
-          {customers.pagination && (
-            <Pagination
-              currentPage={customers.pagination.page}
-              totalPages={customers.pagination.totalPages}
-              onPageChange={customers.setPage}
+          <SectionErrorBoundary sectionName="고객 목록">
+            <SectionHeader>
+              <h2>고객 목록</h2>
+              <Controls>
+                <CustomerSearchInput value={customers.name} onChange={customers.setName} />
+                <SortSelect sortBy={customers.sortBy} onSort={customers.setSortBy} />
+              </Controls>
+            </SectionHeader>
+            <CustomerList
+              customers={customers.customers}
+              isLoading={customers.isLoading}
+              error={customers.error}
+              onCustomerClick={handleCustomerClick}
             />
-          )}
+            {customers.pagination && (
+              <Pagination
+                currentPage={customers.pagination.page}
+                totalPages={customers.pagination.totalPages}
+                onPageChange={customers.setPage}
+              />
+            )}
+          </SectionErrorBoundary>
         </Section>
       </Main>
 
       {selectedCustomerId && selectedCustomer && (
-        <CustomerDetailModal
-          customerName={selectedCustomer.name}
-          purchases={customerPurchases.data || []}
-          isLoading={customerPurchases.isLoading}
-          error={customerPurchases.error}
-          onClose={handleCloseModal}
-        />
+        <SectionErrorBoundary sectionName="고객 상세 정보">
+          <CustomerDetailModal
+            customerName={selectedCustomer.name}
+            purchases={customerPurchases.data || []}
+            isLoading={customerPurchases.isLoading}
+            error={customerPurchases.error}
+            onClose={handleCloseModal}
+          />
+        </SectionErrorBoundary>
       )}
     </Container>
   )
