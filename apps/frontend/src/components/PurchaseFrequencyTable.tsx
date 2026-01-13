@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { PurchaseFrequency } from '../types'
 import { formatPriceRange } from '../utils/priceRange'
 import { Skeleton } from './common/Skeleton'
+import { getErrorMessage } from '../api/errors'
 
 interface Props {
   data: PurchaseFrequency[]
@@ -22,7 +23,7 @@ export function PurchaseFrequencyTable({ data, isLoading, error }: Props) {
   }
 
   if (error) {
-    return <ErrorMessage>에러 발생: {error.message}</ErrorMessage>
+    return <ErrorMessage>{getErrorMessage(error)}</ErrorMessage>
   }
 
   if (!data || data.length === 0) {

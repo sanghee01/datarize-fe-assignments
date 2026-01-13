@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { Customer } from '../types'
 import { Skeleton } from './common/Skeleton'
+import { getErrorMessage } from '../api/errors'
 
 interface Props {
   customers: Customer[]
@@ -44,7 +45,7 @@ export function CustomerList({ customers, isLoading, error, onCustomerClick }: P
   }
 
   if (error) {
-    return <ErrorMessage>에러 발생: {error.message}</ErrorMessage>
+    return <ErrorMessage>{getErrorMessage(error)}</ErrorMessage>
   }
 
   if (customers.length === 0) {

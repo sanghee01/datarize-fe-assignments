@@ -3,6 +3,7 @@ import type { CustomerPurchase } from '../types'
 import { Modal } from './common/Modal'
 import { Skeleton } from './common/Skeleton'
 import { ImageWithFallback } from './common/ImageWithFallback'
+import { getErrorMessage } from '../api/errors'
 
 interface CustomerDetailModalProps {
   customerName: string
@@ -30,7 +31,7 @@ export function CustomerDetailModal({ customerName, purchases, isLoading, error,
           ))}
         </PurchaseList>
       )}
-      {error && <ErrorMessage>에러 발생: {error.message}</ErrorMessage>}
+      {error && <ErrorMessage>{getErrorMessage(error)}</ErrorMessage>}
       {!isLoading && !error && purchases.length === 0 && <Message>구매 내역이 없습니다.</Message>}
       {!isLoading && !error && purchases.length > 0 && (
         <PurchaseList>
