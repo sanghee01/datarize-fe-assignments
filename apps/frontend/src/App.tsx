@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { usePurchaseFrequency } from './hooks/usePurchaseFrequency'
+import { useCustomers } from './hooks/useCustomers'
 import { PurchaseFrequencyTable } from './components/PurchaseFrequencyTable'
 import { DateRangePicker } from './components/DateRangePicker'
-import { DEFAULT_DATE_RANGE } from './constants'
 import { CSVDownloadButton } from './components/CSVDownloadButton'
 import { CustomerList } from './components/CustomerList'
-import { useCustomers } from './hooks/useCustomers'
+import { SortSelect } from './components/SortSelect'
+import { CustomerSearchInput } from './components/CustomerSearchInput'
+import { DEFAULT_DATE_RANGE } from './constants'
 
 function App() {
   const [dateRange, setDateRange] = useState(DEFAULT_DATE_RANGE)
@@ -32,6 +34,10 @@ function App() {
 
       <section>
         <h2>고객 목록</h2>
+        <div>
+          <CustomerSearchInput value={customers.name} onChange={customers.setName} />
+          <SortSelect sortBy={customers.sortBy} onSort={customers.setSortBy} />
+        </div>
         <CustomerList
           customers={customers.customers}
           isLoading={customers.isLoading}
