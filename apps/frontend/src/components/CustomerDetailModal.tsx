@@ -4,6 +4,7 @@ import { Modal } from './common/Modal'
 import { Skeleton } from './common/Skeleton'
 import { ImageWithFallback } from './common/ImageWithFallback'
 import { ErrorMessage } from './common/ErrorMessage'
+import { EmptyState } from './common/EmptyState'
 import { getErrorMessage } from '../api/errors'
 
 interface CustomerDetailModalProps {
@@ -41,7 +42,13 @@ export function CustomerDetailModal({
         </PurchaseList>
       )}
       {error && <ErrorMessage message={getErrorMessage(error)} onRetry={onRetry} />}
-      {!isLoading && !error && purchases.length === 0 && <Message>구매 내역이 없습니다.</Message>}
+      {!isLoading && !error && purchases.length === 0 && (
+        <EmptyState
+          icon="🛒"
+          title="구매 내역이 없습니다"
+          description={`${customerName}님의 구매 기록이 아직 없어요.`}
+        />
+      )}
       {!isLoading && !error && purchases.length > 0 && (
         <PurchaseList>
           {purchases.map((purchase, index) => (
@@ -69,12 +76,6 @@ export function CustomerDetailModal({
     </Modal>
   )
 }
-
-const Message = styled.div`
-  padding: var(--spacing-xl);
-  text-align: center;
-  color: var(--color-gray-600);
-`
 
 const PurchaseList = styled.div`
   display: flex;

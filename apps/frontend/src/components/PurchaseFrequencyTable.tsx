@@ -4,6 +4,7 @@ import type { PurchaseFrequency } from '../types'
 import { formatPriceRange } from '../utils/priceRange'
 import { Skeleton } from './common/Skeleton'
 import { ErrorMessage } from './common/ErrorMessage'
+import { EmptyState } from './common/EmptyState'
 import { getErrorMessage } from '../api/errors'
 
 interface Props {
@@ -29,7 +30,13 @@ export function PurchaseFrequencyTable({ data, isLoading, error, onRetry }: Prop
   }
 
   if (!data || data.length === 0) {
-    return <Message>데이터가 없습니다.</Message>
+    return (
+      <EmptyState
+        icon="📊"
+        title="구매 빈도 데이터가 없습니다"
+        description="아직 가격대별 구매 통계가 없어요. 고객의 구매가 쌓이면 차트가 표시됩니다."
+      />
+    )
   }
 
   const chartData = data.map((item) => ({
@@ -67,12 +74,6 @@ export function PurchaseFrequencyTable({ data, isLoading, error, onRetry }: Prop
 const ChartContainer = styled.div`
   width: 100%;
   padding: var(--spacing-md);
-`
-
-const Message = styled.div`
-  padding: var(--spacing-xl);
-  text-align: center;
-  color: var(--color-gray-600);
 `
 
 const SkeletonWrapper = styled.div`

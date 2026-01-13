@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import type { Customer } from '../types'
 import { Skeleton } from './common/Skeleton'
 import { ErrorMessage } from './common/ErrorMessage'
+import { EmptyState } from './common/EmptyState'
 import { getErrorMessage } from '../api/errors'
 
 interface Props {
@@ -51,7 +52,13 @@ export function CustomerList({ customers, isLoading, error, onCustomerClick, onR
   }
 
   if (customers.length === 0) {
-    return <Message>고객 데이터가 없습니다.</Message>
+    return (
+      <EmptyState
+        icon="👥"
+        title="고객 데이터가 없습니다"
+        description="아직 등록된 고객 정보가 없어요. 고객이 구매를 하면 여기에 표시됩니다."
+      />
+    )
   }
 
   return (
@@ -110,10 +117,4 @@ const ClickableRow = styled.tr`
   &:hover {
     background-color: var(--color-gray-50);
   }
-`
-
-const Message = styled.div`
-  padding: var(--spacing-xl);
-  text-align: center;
-  color: var(--color-gray-600);
 `
