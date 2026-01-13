@@ -3,6 +3,7 @@ import { usePurchaseFrequency } from './hooks/usePurchaseFrequency'
 import { PurchaseFrequencyTable } from './components/PurchaseFrequencyTable'
 import { DateRangePicker } from './components/DateRangePicker'
 import { DEFAULT_DATE_RANGE } from './constants'
+import { CSVDownloadButton } from './components/CSVDownloadButton'
 
 function App() {
   const [dateRange, setDateRange] = useState(DEFAULT_DATE_RANGE)
@@ -16,6 +17,7 @@ function App() {
 
       <section>
         <h2>가격대별 구매 빈도</h2>
+        <CSVDownloadButton dateRange={dateRange} />
         <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
       </section>
     </div>
