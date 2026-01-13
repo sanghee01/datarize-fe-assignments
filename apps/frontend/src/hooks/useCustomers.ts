@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { fetchCustomers } from '../api/customers'
 import type { DateRange } from '../types'
 
@@ -18,6 +18,7 @@ export function useCustomers(dateRange: DateRange) {
         from: dateRange.from,
         to: dateRange.to,
       }),
+    placeholderData: keepPreviousData,
   })
 
   return {

@@ -7,6 +7,7 @@ import { CSVDownloadButton } from './components/CSVDownloadButton'
 import { CustomerList } from './components/CustomerList'
 import { SortSelect } from './components/SortSelect'
 import { CustomerSearchInput } from './components/CustomerSearchInput'
+import { Pagination } from './components/Pagination'
 import { DEFAULT_DATE_RANGE } from './constants'
 
 function App() {
@@ -44,6 +45,13 @@ function App() {
           error={customers.error}
           onCustomerClick={handleCustomerClick}
         />
+        {customers.pagination && (
+          <Pagination
+            currentPage={customers.pagination.page}
+            totalPages={customers.pagination.totalPages}
+            onPageChange={customers.setPage}
+          />
+        )}
       </section>
     </div>
   )
