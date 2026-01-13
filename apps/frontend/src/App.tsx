@@ -4,10 +4,19 @@ import { PurchaseFrequencyTable } from './components/PurchaseFrequencyTable'
 import { DateRangePicker } from './components/DateRangePicker'
 import { DEFAULT_DATE_RANGE } from './constants'
 import { CSVDownloadButton } from './components/CSVDownloadButton'
+import { CustomerList } from './components/CustomerList'
+import { useCustomers } from './hooks/useCustomers'
 
 function App() {
   const [dateRange, setDateRange] = useState(DEFAULT_DATE_RANGE)
+  const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
+
   const { data, isLoading, error } = usePurchaseFrequency(dateRange)
+  const customers = useCustomers(dateRange)
+
+  const handleCustomerClick = (customerId: number) => {
+    setSelectedCustomerId(customerId)
+  }
 
   return (
     <div>
@@ -19,6 +28,16 @@ function App() {
         <h2>가격대별 구매 빈도</h2>
         <CSVDownloadButton dateRange={dateRange} />
         <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
+      </section>
+
+      <section>
+        <h2>고객 목록</h2>
+        <CustomerList
+          customers={customers.customers}
+          isLoading={customers.isLoading}
+          error={customers.error}
+          onCustomerClick={handleCustomerClick}
+        />
       </section>
     </div>
   )
