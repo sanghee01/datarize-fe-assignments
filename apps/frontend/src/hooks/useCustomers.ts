@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { fetchCustomers } from '../api/customers'
 import type { DateRange } from '../types'
@@ -6,7 +6,12 @@ import type { DateRange } from '../types'
 export function useCustomers(dateRange: DateRange) {
   const [page, setPage] = useState(1)
   const [sortBy, setSortBy] = useState<'asc' | 'desc' | null>(null)
-  const [name, setName] = useState('')
+  const [name, setNameState] = useState('')
+
+  const setName = useCallback((newName: string) => {
+    setNameState(newName)
+    setPage(1)
+  }, [])
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['customers', dateRange, page, sortBy, name],
