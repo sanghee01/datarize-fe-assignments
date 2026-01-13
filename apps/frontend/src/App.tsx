@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { usePurchaseFrequency } from './hooks/usePurchaseFrequency'
 import { PurchaseFrequencyTable } from './components/PurchaseFrequencyTable'
+import { DateRangePicker } from './components/DateRangePicker'
 import { DEFAULT_DATE_RANGE } from './constants'
 
 function App() {
@@ -10,6 +11,8 @@ function App() {
   return (
     <div>
       <h1>쇼핑몰 구매 데이터 대시보드</h1>
+
+      <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
 
       <section>
         <h2>가격대별 구매 빈도</h2>
