@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import type { CustomerPurchase } from '../types'
 import { Modal } from './common/Modal'
 import { Skeleton } from './common/Skeleton'
+import { ImageWithFallback } from './common/ImageWithFallback'
 
 interface CustomerDetailModalProps {
   customerName: string
@@ -35,7 +36,7 @@ export function CustomerDetailModal({ customerName, purchases, isLoading, error,
         <PurchaseList>
           {purchases.map((purchase, index) => (
             <PurchaseItem key={index}>
-              <ProductImage src={purchase.imgSrc} alt={purchase.product} />
+              <ImageWithFallback src={purchase.imgSrc} alt={purchase.product} width="100px" height="100px" />
               <Info>
                 <ProductName>{purchase.product}</ProductName>
                 <InfoRow>
@@ -86,14 +87,6 @@ const PurchaseItem = styled.div`
   &:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-`
-
-const ProductImage = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-  flex-shrink: 0;
 `
 
 const Info = styled.div`
