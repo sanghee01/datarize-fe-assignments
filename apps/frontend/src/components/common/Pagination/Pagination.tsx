@@ -74,3 +74,4 @@ const PageInfo = styled.span`
   min-width: 80px;
   text-align: center;
 `
+
