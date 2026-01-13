@@ -3,6 +3,7 @@ import type { CustomerPurchase } from '../types'
 import { Modal } from './common/Modal'
 import { Skeleton } from './common/Skeleton'
 import { ImageWithFallback } from './common/ImageWithFallback'
+import { ErrorMessage } from './common/ErrorMessage'
 import { getErrorMessage } from '../api/errors'
 
 interface CustomerDetailModalProps {
@@ -11,9 +12,17 @@ interface CustomerDetailModalProps {
   isLoading: boolean
   error: Error | null
   onClose: () => void
+  onRetry?: () => void
 }
 
-export function CustomerDetailModal({ customerName, purchases, isLoading, error, onClose }: CustomerDetailModalProps) {
+export function CustomerDetailModal({
+  customerName,
+  purchases,
+  isLoading,
+  error,
+  onClose,
+  onRetry,
+}: CustomerDetailModalProps) {
   return (
     <Modal isOpen={true} onClose={onClose} title={`${customerName}님의 구매 내역`}>
       {isLoading && (
@@ -31,7 +40,7 @@ export function CustomerDetailModal({ customerName, purchases, isLoading, error,
           ))}
         </PurchaseList>
       )}
-      {error && <ErrorMessage>{getErrorMessage(error)}</ErrorMessage>}
+      {error && <ErrorMessage message={getErrorMessage(error)} onRetry={onRetry} />}
       {!isLoading && !error && purchases.length === 0 && <Message>구매 내역이 없습니다.</Message>}
       {!isLoading && !error && purchases.length > 0 && (
         <PurchaseList>
@@ -65,10 +74,6 @@ const Message = styled.div`
   padding: var(--spacing-xl);
   text-align: center;
   color: var(--color-gray-600);
-`
-
-const ErrorMessage = styled(Message)`
-  color: var(--color-error);
 `
 
 const PurchaseList = styled.div`

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { Customer } from '../types'
 import { Skeleton } from './common/Skeleton'
+import { ErrorMessage } from './common/ErrorMessage'
 import { getErrorMessage } from '../api/errors'
 
 interface Props {
@@ -8,9 +9,10 @@ interface Props {
   isLoading: boolean
   error: Error | null
   onCustomerClick: (customerId: number) => void
+  onRetry?: () => void
 }
 
-export function CustomerList({ customers, isLoading, error, onCustomerClick }: Props) {
+export function CustomerList({ customers, isLoading, error, onCustomerClick, onRetry }: Props) {
   if (isLoading) {
     return (
       <Table>
@@ -45,7 +47,7 @@ export function CustomerList({ customers, isLoading, error, onCustomerClick }: P
   }
 
   if (error) {
-    return <ErrorMessage>{getErrorMessage(error)}</ErrorMessage>
+    return <ErrorMessage message={getErrorMessage(error)} onRetry={onRetry} />
   }
 
   if (customers.length === 0) {
@@ -114,8 +116,4 @@ const Message = styled.div`
   padding: var(--spacing-xl);
   text-align: center;
   color: var(--color-gray-600);
-`
-
-const ErrorMessage = styled(Message)`
-  color: var(--color-error);
 `

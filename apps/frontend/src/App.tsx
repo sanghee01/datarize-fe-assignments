@@ -18,7 +18,7 @@ function App() {
   const [dateRange, setDateRange] = useState(DEFAULT_DATE_RANGE)
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
 
-  const { data, isLoading, error } = usePurchaseFrequency(dateRange)
+  const { data, isLoading, error, refetch } = usePurchaseFrequency(dateRange)
   const customers = useCustomers(dateRange)
   const customerPurchases = useCustomerPurchases(selectedCustomerId, dateRange)
 
@@ -46,7 +46,7 @@ function App() {
               <h2>가격대별 구매 빈도</h2>
               <CSVDownloadButton dateRange={dateRange} />
             </SectionHeader>
-            <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
+            <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} onRetry={refetch} />
           </SectionErrorBoundary>
         </Section>
 
@@ -64,6 +64,7 @@ function App() {
               isLoading={customers.isLoading}
               error={customers.error}
               onCustomerClick={handleCustomerClick}
+              onRetry={customers.refetch}
             />
             {customers.pagination && (
               <Pagination
@@ -84,6 +85,7 @@ function App() {
             isLoading={customerPurchases.isLoading}
             error={customerPurchases.error}
             onClose={handleCloseModal}
+            onRetry={customerPurchases.refetch}
           />
         </SectionErrorBoundary>
       )}

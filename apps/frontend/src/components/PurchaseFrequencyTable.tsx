@@ -3,15 +3,17 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { PurchaseFrequency } from '../types'
 import { formatPriceRange } from '../utils/priceRange'
 import { Skeleton } from './common/Skeleton'
+import { ErrorMessage } from './common/ErrorMessage'
 import { getErrorMessage } from '../api/errors'
 
 interface Props {
   data: PurchaseFrequency[]
   isLoading: boolean
   error: Error | null
+  onRetry?: () => void
 }
 
-export function PurchaseFrequencyTable({ data, isLoading, error }: Props) {
+export function PurchaseFrequencyTable({ data, isLoading, error, onRetry }: Props) {
   if (isLoading) {
     return (
       <ChartContainer>
@@ -23,7 +25,7 @@ export function PurchaseFrequencyTable({ data, isLoading, error }: Props) {
   }
 
   if (error) {
-    return <ErrorMessage>{getErrorMessage(error)}</ErrorMessage>
+    return <ErrorMessage message={getErrorMessage(error)} onRetry={onRetry} />
   }
 
   if (!data || data.length === 0) {
@@ -71,10 +73,6 @@ const Message = styled.div`
   padding: var(--spacing-xl);
   text-align: center;
   color: var(--color-gray-600);
-`
-
-const ErrorMessage = styled(Message)`
-  color: var(--color-error);
 `
 
 const SkeletonWrapper = styled.div`

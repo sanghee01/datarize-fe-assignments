@@ -13,7 +13,7 @@ export function useCustomers(dateRange: DateRange) {
     setPage(1)
   }, [])
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['customers', dateRange, page, sortBy, name],
     queryFn: () =>
       fetchCustomers({
@@ -31,6 +31,7 @@ export function useCustomers(dateRange: DateRange) {
     pagination: data?.pagination,
     isLoading,
     error,
+    refetch,
     page,
     setPage,
     sortBy,
