@@ -55,4 +55,3 @@ export const ServerError: Story = {
     onRetry: () => alert('재시도!'),
   },
 }
-

@@ -3,15 +3,17 @@ import { useState } from 'react'
 import { usePurchaseFrequency } from './hooks/usePurchaseFrequency'
 import { useCustomers } from './hooks/useCustomers'
 import { useCustomerPurchases } from './hooks/useCustomerPurchases'
-import { PurchaseFrequencyTable } from './components/PurchaseFrequencyTable'
-import { DateRangePicker } from './components/DateRangePicker'
-import { CSVDownloadButton } from './components/CSVDownloadButton'
-import { CustomerList } from './components/CustomerList'
-import { SortSelect } from './components/SortSelect'
-import { CustomerSearchInput } from './components/CustomerSearchInput'
+import {
+  PurchaseFrequencyTable,
+  DateRangePicker,
+  CSVDownloadButton,
+  CustomerList,
+  SortSelect,
+  CustomerSearchInput,
+  CustomerDetailModal,
+} from './components/features'
 import { Pagination } from './components/common/Pagination'
-import { CustomerDetailModal } from './components/CustomerDetailModal'
-import { SectionErrorBoundary } from './components/SectionErrorBoundary'
+import { SectionErrorBoundary } from './components/common/ErrorBoundary'
 import { DEFAULT_DATE_RANGE } from './constants'
 
 function App() {

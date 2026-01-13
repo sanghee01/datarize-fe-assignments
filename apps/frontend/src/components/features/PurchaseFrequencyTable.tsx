@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import type { PurchaseFrequency } from '../types'
-import { formatPriceRange } from '../utils/priceRange'
-import { Skeleton } from './common/Skeleton'
-import { ErrorMessage } from './common/ErrorMessage'
-import { EmptyState } from './common/EmptyState'
-import { getErrorMessage } from '../api/errors'
+import type { PurchaseFrequency } from '../../types'
+import { formatPriceRange } from '../../utils/priceRange'
+import { Skeleton } from '../common/Skeleton'
+import { ErrorMessage } from '../common/ErrorMessage'
+import { EmptyState } from '../common/EmptyState'
+import { getErrorMessage } from '../../api/errors'
 
 interface Props {
   data: PurchaseFrequency[]

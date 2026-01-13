@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import type { CustomerPurchase } from '../types'
-import { Modal } from './common/Modal'
-import { Skeleton } from './common/Skeleton'
-import { ImageWithFallback } from './common/ImageWithFallback'
-import { ErrorMessage } from './common/ErrorMessage'
-import { EmptyState } from './common/EmptyState'
-import { getErrorMessage } from '../api/errors'
+import type { CustomerPurchase } from '../../types'
+import { Modal } from '../common/Modal'
+import { Skeleton } from '../common/Skeleton'
+import { ImageWithFallback } from '../common/ImageWithFallback'
+import { ErrorMessage } from '../common/ErrorMessage'
+import { EmptyState } from '../common/EmptyState'
+import { getErrorMessage } from '../../api/errors'
 
 interface CustomerDetailModalProps {
   customerName: string

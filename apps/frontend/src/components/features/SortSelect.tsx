@@ -1,4 +1,4 @@
-import { Select } from './common/Select'
+import { Select } from '../common/Select'
 
 type SortOrder = 'asc' | 'desc' | null
 

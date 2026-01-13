@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import type { Customer } from '../types'
-import { Skeleton } from './common/Skeleton'
-import { ErrorMessage } from './common/ErrorMessage'
-import { EmptyState } from './common/EmptyState'
-import { getErrorMessage } from '../api/errors'
+import type { Customer } from '../../types'
+import { Skeleton } from '../common/Skeleton'
+import { ErrorMessage } from '../common/ErrorMessage'
+import { EmptyState } from '../common/EmptyState'
+import { getErrorMessage } from '../../api/errors'
 
 interface Props {
   customers: Customer[]

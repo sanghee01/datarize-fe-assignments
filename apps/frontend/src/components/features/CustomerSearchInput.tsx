@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Input } from './common/Input'
+import { Input } from '../common/Input'
 
 interface CustomerSearchInputProps {
   value: string
