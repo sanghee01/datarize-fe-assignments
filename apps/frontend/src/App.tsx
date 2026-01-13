@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { useState } from 'react'
 import { usePurchaseFrequency } from './hooks/usePurchaseFrequency'
 import { useCustomers } from './hooks/useCustomers'
@@ -31,37 +32,44 @@ function App() {
   const selectedCustomer = customers.customers.find((customer) => customer.id === selectedCustomerId)
 
   return (
-    <div>
-      <h1>쇼핑몰 구매 데이터 대시보드</h1>
+    <Container>
+      <Header>
+        <h1>쇼핑몰 구매 데이터 대시보드</h1>
+        <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
+      </Header>
 
-      <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
+      <Main>
+        <Section>
+          <SectionHeader>
+            <h2>가격대별 구매 빈도</h2>
+            <CSVDownloadButton dateRange={dateRange} />
+          </SectionHeader>
+          <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
+        </Section>
 
-      <section>
-        <h2>가격대별 구매 빈도</h2>
-        <CSVDownloadButton dateRange={dateRange} />
-        <PurchaseFrequencyTable data={data || []} isLoading={isLoading} error={error} />
-      </section>
-
-      <section>
-        <h2>고객 목록</h2>
-        <div>
-          <CustomerSearchInput value={customers.name} onChange={customers.setName} />
-          <SortSelect sortBy={customers.sortBy} onSort={customers.setSortBy} />
-        </div>
-        <CustomerList
-          customers={customers.customers}
-          isLoading={customers.isLoading}
-          error={customers.error}
-          onCustomerClick={handleCustomerClick}
-        />
-        {customers.pagination && (
-          <Pagination
-            currentPage={customers.pagination.page}
-            totalPages={customers.pagination.totalPages}
-            onPageChange={customers.setPage}
+        <Section>
+          <SectionHeader>
+            <h2>고객 목록</h2>
+            <Controls>
+              <CustomerSearchInput value={customers.name} onChange={customers.setName} />
+              <SortSelect sortBy={customers.sortBy} onSort={customers.setSortBy} />
+            </Controls>
+          </SectionHeader>
+          <CustomerList
+            customers={customers.customers}
+            isLoading={customers.isLoading}
+            error={customers.error}
+            onCustomerClick={handleCustomerClick}
           />
-        )}
-      </section>
+          {customers.pagination && (
+            <Pagination
+              currentPage={customers.pagination.page}
+              totalPages={customers.pagination.totalPages}
+              onPageChange={customers.setPage}
+            />
+          )}
+        </Section>
+      </Main>
 
       {selectedCustomerId && selectedCustomer && (
         <CustomerDetailModal
@@ -72,8 +80,65 @@ function App() {
           onClose={handleCloseModal}
         />
       )}
-    </div>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  min-height: 100vh;
+  background-color: var(--color-gray-50);
+`
+
+const Header = styled.header`
+  background: white;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-gray-900);
+  }
+`
+
+const Main = styled.main`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+`
+
+const Section = styled.section`
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-xl);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+`
+
+const SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+
+  h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+  }
+`
+
+const Controls = styled.div`
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+`
 
 export default App

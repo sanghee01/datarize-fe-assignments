@@ -1,3 +1,5 @@
+import styled from '@emotion/styled'
+
 interface PaginationProps {
   currentPage: number
   totalPages: number
@@ -22,16 +24,53 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
   }
 
   return (
-    <div>
-      <button onClick={handlePrevious} disabled={currentPage === 1}>
+    <Container>
+      <Button onClick={handlePrevious} disabled={currentPage === 1}>
         이전
-      </button>
-      <span>
+      </Button>
+      <PageInfo>
         {currentPage} / {totalPages}
-      </span>
-      <button onClick={handleNext} disabled={currentPage === totalPages}>
+      </PageInfo>
+      <Button onClick={handleNext} disabled={currentPage === totalPages}>
         다음
-      </button>
-    </div>
+      </Button>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+`
+
+const Button = styled.button`
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-gray-900);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-gray-50);
+    border-color: var(--color-primary);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+`
+
+const PageInfo = styled.span`
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  min-width: 80px;
+  text-align: center;
+`

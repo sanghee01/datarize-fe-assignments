@@ -19,19 +19,28 @@ export function CustomerDetailModal({ customerName, purchases, isLoading, error,
         </Header>
 
         <Content>
-          {isLoading && <div>로딩 중...</div>}
-          {error && <div>에러 발생: {error.message}</div>}
-          {!isLoading && !error && purchases.length === 0 && <div>구매 내역이 없습니다.</div>}
+          {isLoading && <Message>로딩 중...</Message>}
+          {error && <ErrorMessage>에러 발생: {error.message}</ErrorMessage>}
+          {!isLoading && !error && purchases.length === 0 && <Message>구매 내역이 없습니다.</Message>}
           {!isLoading && !error && purchases.length > 0 && (
             <PurchaseList>
               {purchases.map((purchase, index) => (
                 <PurchaseItem key={index}>
                   <ProductImage src={purchase.imgSrc} alt={purchase.product} />
                   <Info>
-                    <h3>{purchase.product}</h3>
-                    <p>가격: {purchase.price.toLocaleString()}원</p>
-                    <p>수량: {purchase.quantity}개</p>
-                    <p>날짜: {purchase.date}</p>
+                    <ProductName>{purchase.product}</ProductName>
+                    <InfoRow>
+                      <Label>가격</Label>
+                      <Value>{purchase.price.toLocaleString()}원</Value>
+                    </InfoRow>
+                    <InfoRow>
+                      <Label>수량</Label>
+                      <Value>{purchase.quantity}개</Value>
+                    </InfoRow>
+                    <InfoRow>
+                      <Label>날짜</Label>
+                      <Value>{purchase.date}</Value>
+                    </InfoRow>
                   </Info>
                 </PurchaseItem>
               ))}
@@ -70,12 +79,14 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
 
   h2 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
   }
 `
 
@@ -84,56 +95,87 @@ const CloseButton = styled.button`
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #666;
+  color: var(--color-gray-600);
   padding: 0;
   width: 2rem;
   height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.2s;
 
   &:hover {
-    color: #000;
+    color: var(--color-gray-900);
   }
 `
 
 const Content = styled.div`
-  padding: 1.5rem;
+  padding: var(--spacing-lg);
   overflow-y: auto;
+`
+
+const Message = styled.div`
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--color-gray-600);
+`
+
+const ErrorMessage = styled(Message)`
+  color: var(--color-error);
 `
 
 const PurchaseList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-md);
 `
 
 const PurchaseItem = styled.div`
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 `
 
 const ProductImage = styled.img`
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
+  flex-shrink: 0;
 `
 
 const Info = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+`
 
-  h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-  }
+const ProductName = styled.h3`
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-gray-900);
+`
 
-  p {
-    margin: 0.25rem 0;
-    font-size: 0.9rem;
-    color: #666;
-  }
+const InfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+`
+
+const Label = styled.span`
+  color: var(--color-gray-600);
+`
+
+const Value = styled.span`
+  color: var(--color-gray-900);
+  font-weight: 500;
 `
