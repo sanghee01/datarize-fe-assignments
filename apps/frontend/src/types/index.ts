@@ -15,3 +15,22 @@ export interface Purchase {
   price: number
   quantity: number
 }
+
+export interface Customer {
+  id: number
+  name: string
+  count: number
+  totalAmount: number
+}
+
+export interface Pagination {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+}
+
+export interface CustomersResponse {
+  data: Customer[]
+  pagination: Pagination
+}
