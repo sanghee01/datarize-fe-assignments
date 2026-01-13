@@ -9,7 +9,16 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ width = '100%', height = '1rem', variant = 'text', className }: SkeletonProps) {
-  return <StyledSkeleton width={width} height={height} variant={variant} className={className} />
+  return (
+    <StyledSkeleton
+      width={width}
+      height={height}
+      variant={variant}
+      className={className}
+      role="status"
+      aria-label="로딩 중"
+    />
+  )
 }
 
 const shimmer = keyframes`

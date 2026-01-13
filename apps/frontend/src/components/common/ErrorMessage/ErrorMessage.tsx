@@ -9,9 +9,9 @@ interface ErrorMessageProps {
 export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
   return (
     <Container>
-      <Text>{message}</Text>
+      <Text role="alert">{message}</Text>
       {onRetry && (
-        <Button variant="primary" onClick={onRetry}>
+        <Button variant="primary" onClick={onRetry} aria-label="데이터 다시 불러오기">
           다시 시도
         </Button>
       )}

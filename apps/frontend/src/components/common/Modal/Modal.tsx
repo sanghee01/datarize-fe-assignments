@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import type { ReactNode } from 'react'
+import { useFocusTrap } from '../../../hooks/useFocusTrap'
 
 export interface ModalProps {
   isOpen: boolean
@@ -9,14 +10,25 @@ export interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+  const modalRef = useFocusTrap({ isActive: isOpen, onEscape: onClose })
+
   if (!isOpen) return null
 
   return (
-    <Overlay onClick={onClose}>
-      <ModalContainer onClick={(e) => e.stopPropagation()}>
+    <Overlay onClick={onClose} role="presentation">
+      <ModalContainer
+        ref={modalRef}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? 'modal-title' : undefined}
+        tabIndex={-1}
+      >
         <Header>
-          {title && <Title>{title}</Title>}
-          <CloseButton onClick={onClose}>✕</CloseButton>
+          {title && <Title id="modal-title">{title}</Title>}
+          <CloseButton onClick={onClose} aria-label="모달 닫기">
+            ✕
+          </CloseButton>
         </Header>
         <Content>{children}</Content>
       </ModalContainer>
