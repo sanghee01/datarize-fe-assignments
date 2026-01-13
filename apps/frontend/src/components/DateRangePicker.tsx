@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import type { DateRange } from '../types'
+import { Input } from './common/Input'
 
 interface Props {
   dateRange: DateRange
@@ -11,20 +12,12 @@ export function DateRangePicker({ dateRange, onChange }: Props) {
     <Container>
       <Label>
         <span>시작일</span>
-        <Input 
-          type="date" 
-          value={dateRange.from} 
-          onChange={(e) => onChange({ ...dateRange, from: e.target.value })} 
-        />
+        <Input type="date" value={dateRange.from} onChange={(e) => onChange({ ...dateRange, from: e.target.value })} />
       </Label>
 
       <Label>
         <span>종료일</span>
-        <Input 
-          type="date" 
-          value={dateRange.to} 
-          onChange={(e) => onChange({ ...dateRange, to: e.target.value })} 
-        />
+        <Input type="date" value={dateRange.to} onChange={(e) => onChange({ ...dateRange, to: e.target.value })} />
       </Label>
     </Container>
   )
@@ -45,19 +38,5 @@ const Label = styled.label`
     font-size: var(--font-size-sm);
     font-weight: 500;
     color: var(--color-gray-600);
-  }
-`
-
-const Input = styled.input`
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  font-size: var(--font-size-base);
-  color: var(--color-gray-900);
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   }
 `

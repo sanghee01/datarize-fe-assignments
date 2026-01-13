@@ -9,7 +9,7 @@ import { CSVDownloadButton } from './components/CSVDownloadButton'
 import { CustomerList } from './components/CustomerList'
 import { SortSelect } from './components/SortSelect'
 import { CustomerSearchInput } from './components/CustomerSearchInput'
-import { Pagination } from './components/Pagination'
+import { Pagination } from './components/common/Pagination'
 import { CustomerDetailModal } from './components/CustomerDetailModal'
 import { DEFAULT_DATE_RANGE } from './constants'
 

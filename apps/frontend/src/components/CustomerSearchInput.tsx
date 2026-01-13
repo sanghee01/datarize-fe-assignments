@@ -1,5 +1,6 @@
-import styled from '@emotion/styled'
 import { useState, useEffect } from 'react'
+import styled from '@emotion/styled'
+import { Input } from './common/Input'
 
 interface CustomerSearchInputProps {
   value: string
@@ -18,7 +19,7 @@ export function CustomerSearchInput({ value, onChange }: CustomerSearchInputProp
   }, [localValue, onChange])
 
   return (
-    <Input
+    <StyledInput
       type="text"
       placeholder="고객 이름 검색..."
       value={localValue}
@@ -27,21 +28,6 @@ export function CustomerSearchInput({ value, onChange }: CustomerSearchInputProp
   )
 }
 
-const Input = styled.input`
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-900);
+const StyledInput = styled(Input)`
   min-width: 200px;
-
-  &::placeholder {
-    color: var(--color-gray-600);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  }
 `
