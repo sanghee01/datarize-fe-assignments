@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import type { PurchaseFrequency } from '../types'
+import { formatPriceRange } from '../utils/priceRange'
 
 interface Props {
   data: PurchaseFrequency[]
@@ -20,49 +22,41 @@ export function PurchaseFrequencyTable({ data, isLoading, error }: Props) {
     return <Message>데이터가 없습니다.</Message>
   }
 
+  const chartData = data.map((item) => ({
+    name: formatPriceRange(item.range),
+    value: item.count,
+  }))
+
   return (
-    <Table>
-      <thead>
-        <tr>
-          <Th>가격대</Th>
-          <Th align="right">구매 횟수</Th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((item) => (
-          <tr key={item.range}>
-            <Td>{item.range}</Td>
-            <Td align="right">{item.count.toLocaleString()}회</Td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <ChartContainer>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+          <XAxis dataKey="name" label={{ value: '가격대', position: 'insideBottom', offset: -5 }} />
+          <YAxis label={{ value: '인원수', angle: -90, position: 'insideLeft' }} />
+          <Tooltip
+            formatter={(value: number | undefined) => {
+              if (value === undefined) return ['0명', '인원수']
+              return [`${value}명`, '인원수']
+            }}
+            labelFormatter={(label) => `가격대: ${label}`}
+            labelStyle={{ color: 'var(--color-gray-900)' }}
+            contentStyle={{
+              backgroundColor: 'white',
+              border: '1px solid var(--color-border)',
+              borderRadius: '4px',
+            }}
+          />
+          <Bar dataKey="value" fill="var(--color-primary)" />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartContainer>
   )
 }
 
-const Table = styled.table`
+const ChartContainer = styled.div`
   width: 100%;
-  border-collapse: collapse;
-`
-
-const Th = styled.th<{ align?: string }>`
-  text-align: ${(props) => props.align || 'left'};
   padding: var(--spacing-md);
-  background-color: var(--color-gray-50);
-  border-bottom: 2px solid var(--color-border);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--color-gray-600);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-`
-
-const Td = styled.td<{ align?: string }>`
-  text-align: ${(props) => props.align || 'left'};
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
-  font-size: var(--font-size-base);
-  color: var(--color-gray-900);
 `
 
 const Message = styled.div`
