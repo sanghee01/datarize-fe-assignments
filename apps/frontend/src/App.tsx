@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { usePurchaseFrequency } from './hooks/usePurchaseFrequency'
 import { useCustomers } from './hooks/useCustomers'
+import { useCustomerPurchases } from './hooks/useCustomerPurchases'
 import { PurchaseFrequencyTable } from './components/PurchaseFrequencyTable'
 import { DateRangePicker } from './components/DateRangePicker'
 import { CSVDownloadButton } from './components/CSVDownloadButton'
@@ -8,6 +9,7 @@ import { CustomerList } from './components/CustomerList'
 import { SortSelect } from './components/SortSelect'
 import { CustomerSearchInput } from './components/CustomerSearchInput'
 import { Pagination } from './components/Pagination'
+import { CustomerDetailModal } from './components/CustomerDetailModal'
 import { DEFAULT_DATE_RANGE } from './constants'
 
 function App() {
@@ -16,10 +18,17 @@ function App() {
 
   const { data, isLoading, error } = usePurchaseFrequency(dateRange)
   const customers = useCustomers(dateRange)
+  const customerPurchases = useCustomerPurchases(selectedCustomerId, dateRange)
 
   const handleCustomerClick = (customerId: number) => {
     setSelectedCustomerId(customerId)
   }
+
+  const handleCloseModal = () => {
+    setSelectedCustomerId(null)
+  }
+
+  const selectedCustomer = customers.customers.find((customer) => customer.id === selectedCustomerId)
 
   return (
     <div>
@@ -53,6 +62,16 @@ function App() {
           />
         )}
       </section>
+
+      {selectedCustomerId && selectedCustomer && (
+        <CustomerDetailModal
+          customerName={selectedCustomer.name}
+          purchases={customerPurchases.data || []}
+          isLoading={customerPurchases.isLoading}
+          error={customerPurchases.error}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   )
 }
