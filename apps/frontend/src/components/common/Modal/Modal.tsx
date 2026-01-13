@@ -85,4 +85,3 @@ const Content = styled.div`
   padding: var(--spacing-lg);
   overflow-y: auto;
 `
-

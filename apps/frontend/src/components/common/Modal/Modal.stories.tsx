@@ -47,7 +47,6 @@ export const WithoutTitle: Story = {
   },
 }
 
-// Interactive example
 export const Interactive = () => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -61,4 +60,3 @@ export const Interactive = () => {
     </div>
   )
 }
-

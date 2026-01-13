@@ -64,4 +64,3 @@ export const Email: Story = {
     placeholder: 'email@example.com',
   },
 }
-

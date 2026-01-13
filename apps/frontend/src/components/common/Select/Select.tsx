@@ -30,4 +30,3 @@ const StyledSelect = styled.select`
     opacity: 0.6;
   }
 `
-
