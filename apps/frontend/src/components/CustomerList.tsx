@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import type { Customer } from '../types'
+import { Skeleton } from './common/Skeleton'
 
 interface Props {
   customers: Customer[]
@@ -10,7 +11,36 @@ interface Props {
 
 export function CustomerList({ customers, isLoading, error, onCustomerClick }: Props) {
   if (isLoading) {
-    return <Message>로딩 중...</Message>
+    return (
+      <Table>
+        <thead>
+          <tr>
+            <Th>ID</Th>
+            <Th>이름</Th>
+            <Th align="right">구매 횟수</Th>
+            <Th align="right">구매 금액</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 10 }).map((_, index) => (
+            <tr key={index}>
+              <Td>
+                <Skeleton width="30px" height="20px" />
+              </Td>
+              <Td>
+                <Skeleton width="80px" height="20px" />
+              </Td>
+              <Td align="right">
+                <Skeleton width="50px" height="20px" />
+              </Td>
+              <Td align="right">
+                <Skeleton width="100px" height="20px" />
+              </Td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    )
   }
 
   if (error) {
@@ -51,7 +81,7 @@ const Table = styled.table`
 `
 
 const Th = styled.th<{ align?: string }>`
-  text-align: ${props => props.align || 'left'};
+  text-align: ${(props) => props.align || 'left'};
   padding: var(--spacing-md);
   background-color: var(--color-gray-50);
   border-bottom: 2px solid var(--color-border);
@@ -63,7 +93,7 @@ const Th = styled.th<{ align?: string }>`
 `
 
 const Td = styled.td<{ align?: string }>`
-  text-align: ${props => props.align || 'left'};
+  text-align: ${(props) => props.align || 'left'};
   padding: var(--spacing-md);
   border-bottom: 1px solid var(--color-border);
   font-size: var(--font-size-base);

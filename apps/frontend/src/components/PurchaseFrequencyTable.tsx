@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import type { PurchaseFrequency } from '../types'
 import { formatPriceRange } from '../utils/priceRange'
+import { Skeleton } from './common/Skeleton'
 
 interface Props {
   data: PurchaseFrequency[]
@@ -11,7 +12,13 @@ interface Props {
 
 export function PurchaseFrequencyTable({ data, isLoading, error }: Props) {
   if (isLoading) {
-    return <Message>로딩 중...</Message>
+    return (
+      <ChartContainer>
+        <SkeletonWrapper>
+          <Skeleton height="400px" variant="rectangular" />
+        </SkeletonWrapper>
+      </ChartContainer>
+    )
   }
 
   if (error) {
@@ -67,4 +74,9 @@ const Message = styled.div`
 
 const ErrorMessage = styled(Message)`
   color: var(--color-error);
+`
+
+const SkeletonWrapper = styled.div`
+  width: 100%;
+  height: 400px;
 `

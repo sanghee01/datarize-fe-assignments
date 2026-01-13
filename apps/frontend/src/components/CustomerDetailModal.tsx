@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { CustomerPurchase } from '../types'
 import { Modal } from './common/Modal'
+import { Skeleton } from './common/Skeleton'
 
 interface CustomerDetailModalProps {
   customerName: string
@@ -13,7 +14,21 @@ interface CustomerDetailModalProps {
 export function CustomerDetailModal({ customerName, purchases, isLoading, error, onClose }: CustomerDetailModalProps) {
   return (
     <Modal isOpen={true} onClose={onClose} title={`${customerName}님의 구매 내역`}>
-      {isLoading && <Message>로딩 중...</Message>}
+      {isLoading && (
+        <PurchaseList>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <PurchaseItem key={index}>
+              <Skeleton width="100px" height="100px" variant="rectangular" />
+              <Info>
+                <Skeleton width="150px" height="20px" />
+                <Skeleton width="100px" height="16px" />
+                <Skeleton width="80px" height="16px" />
+                <Skeleton width="120px" height="16px" />
+              </Info>
+            </PurchaseItem>
+          ))}
+        </PurchaseList>
+      )}
       {error && <ErrorMessage>에러 발생: {error.message}</ErrorMessage>}
       {!isLoading && !error && purchases.length === 0 && <Message>구매 내역이 없습니다.</Message>}
       {!isLoading && !error && purchases.length > 0 && (
